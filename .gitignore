@@ -1,0 +1,10 @@
+# Built on each Mac by build.sh: macOS ties calendar access to the helper built there.
+bin/
+# The owner's saved settings. Alfred writes it.
+prefs.plist
+# Notes about the owner's Mac. They stay on that Mac.
+docs/LOCAL.md
+
+.DS_Store
+__pycache__/
+*.pyc
