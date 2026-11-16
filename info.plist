@@ -504,7 +504,7 @@
 				<key>runningsubtext</key>
 				<string>Reading your calendar…</string>
 				<key>script</key>
-				<string>./bin/agenda list "$1"</string>
+				<string>. scripts/ready.zsh; ./bin/agenda list "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -553,7 +553,7 @@
 				<key>runningsubtext</key>
 				<string>Reading your calendar…</string>
 				<key>script</key>
-				<string>./bin/agenda day "$1"</string>
+				<string>. scripts/ready.zsh; ./bin/agenda day "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -602,7 +602,7 @@
 				<key>runningsubtext</key>
 				<string>Reading your calendar…</string>
 				<key>script</key>
-				<string>./bin/agenda join "$1"</string>
+				<string>. scripts/ready.zsh; ./bin/agenda join "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -651,7 +651,7 @@
 				<key>runningsubtext</key>
 				<string>Reading your calendar…</string>
 				<key>script</key>
-				<string>./bin/agenda block "$1"</string>
+				<string>. scripts/ready.zsh; ./bin/agenda block "$1"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -893,7 +893,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./bin/agenda do</string>
+				<string>. scripts/ready.zsh; ./bin/agenda do</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -1694,7 +1694,7 @@ Sources are in `src/`. Run `./build.sh` in the workflow folder to rebuild. Rebui
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.0.0</string>
+	<string>1.1.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/situmorang-com/alfred-agenda</string>
 </dict>

@@ -1,6 +1,6 @@
 # Agenda — product requirements
 
-**Status:** v1.0.0, in daily use since 13 Nov 2026 · **Last reviewed:** 16 Nov 2026
+**Status:** v1.1.0, released 16 Nov 2026 (in daily use since 13 Nov) · **Last reviewed:** 16 Nov 2026
 An Alfred workflow that shows the user's macOS calendar and gets them into meetings on time.
 How it is built: [ARCHITECTURE.md](ARCHITECTURE.md) · What was learned and decided: [MEMORY.md](MEMORY.md)
 
@@ -26,7 +26,7 @@ Raycast's *My Schedule* puts the day's meetings and a "next up" summary in the l
 
 People who live in Alfred and keep their calendars in macOS Calendar: typically a work Exchange account with Teams meetings, next to iCloud and Google. Built on macOS 27 with Alfred 5.8 and the Powerpack ([MEMORY.md › Environment](MEMORY.md#environment)).
 
-Hard requirements: macOS 14 or later (the calendar access model), Alfred 5.5 or later (Grid View), Xcode command line tools to build.
+Hard requirements: macOS 14 or later (the calendar access model), Alfred 5.5 or later (Grid View); to build from source, Xcode's command line tools.
 
 ## Requirements
 
@@ -148,6 +148,7 @@ The workflow's About text in Alfred describes keys and settings for the user; wh
 | NF-2 | Tiles stay legible in Alfred's light and dark themes. | Light Live; dark in previews only |
 | NF-3 | Everything works from the keyboard. | Live |
 | NF-4 | Builds with `./build.sh` and the Swift toolchain alone. | Live |
+| NF-5 | Ships as one `Agenda.alfredworkflow` for Apple silicon and Intel Macs on macOS 14 or later, and its helpers run after a download although Apple hasn't notarized them. | Apple silicon: a flagged copy of the package ran (16 Nov). Intel: built, never run. Imported into Alfred from a real download: Untested |
 
 ## Compared with Raycast My Schedule
 

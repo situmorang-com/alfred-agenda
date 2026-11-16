@@ -55,6 +55,15 @@ tests/demo.sh [output.gif]
 
 `demo.sh` redraws `docs/images/demo.gif`, the README's animation: the workflow's own rows and tiles for the fixture, in an Alfred-style window on a desktop. `tests/tools/demo.swift` holds the story and the drawing, and ffmpeg encodes it. Redraw it after a change people would see in a view.
 
+## The release package
+
+After `./package.sh`, test the package as someone who downloaded it would have it:
+
+1. Unzip it into a scratch folder and flag every file the way a download does: `xattr -w com.apple.quarantine "0083;$(printf %x $(date +%s));Safari;" <file>`.
+2. Source `scripts/ready.zsh` there and check that no file keeps the flag. Don't run a flagged helper: macOS would show the user a dialog.
+3. Run `tests/smoke.sh` inside the unpacked folder. It tests the packaged programs (this Mac's architecture), which are newer than the sources, so it doesn't rebuild them.
+4. `lipo -archs bin/agenda bin/agenda-calendar` lists both architectures, and `bin/agenda-calendar status` answers `notDetermined`: to macOS it's a new program. Never run `auth` there.
+
 ## Live tests in Alfred
 
 Live tests check what fixtures can't: Alfred's wiring (routing, modifier keys, keywords), the look inside Alfred's window, the alert job. They take over the user's screen and keyboard.

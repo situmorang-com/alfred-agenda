@@ -22,9 +22,15 @@ The keys and settings are in the workflow's About tab and **Configure Workflow�
 
 ## Install
 
-You need macOS 14 or later, Alfred 5.5 or later with the Powerpack, and Apple's command line developer tools (`xcode-select --install`). The workflow is two small Swift programs, built on your Mac.
+Download **Agenda.alfredworkflow** from the [latest release](https://github.com/situmorang-com/alfred-agenda/releases/latest) and double-click it. You need macOS 14 or later and Alfred 5.5 or later with the Powerpack.
 
-Clone this repository into Alfred's workflows folder and build it. To find that folder, right-click any workflow in Alfred Preferences, choose **Open in Finder**, and go up one level. Then, in Terminal:
+Then type `cal` and choose **Allow calendar access**: macOS asks once, for the small helper that reads your calendar (`bin/agenda-calendar`), not for Alfred as a whole.
+
+The two helpers in `bin/` are built for Apple silicon and Intel, but they aren't notarized by Apple, and macOS flags every file that came from a download. So before each run the workflow clears that flag from its own `bin/` and `scripts/` folders ([`scripts/ready.zsh`](scripts/ready.zsh)) and touches nothing else. If you'd rather not, build it yourself.
+
+### Build from source
+
+You need Apple's command line developer tools (`xcode-select --install`). Clone this repository into Alfred's workflows folder and build it. To find that folder, right-click any workflow in Alfred Preferences, choose **Open in Finder**, and go up one level. Then, in Terminal:
 
 ```bash
 cd "path/to/Alfred.alfredpreferences/workflows"
@@ -32,9 +38,7 @@ git clone https://github.com/situmorang-com/alfred-agenda.git user.workflow.agen
 cd user.workflow.agenda && ./build.sh
 ```
 
-Agenda then appears in Alfred Preferences › Workflows (quit and reopen Alfred if it doesn't). Type `cal` and choose **Allow calendar access**: macOS asks once, for the small helper that reads your calendar (`bin/agenda-calendar`), not for Alfred as a whole.
-
-To update, run `git pull && ./build.sh`. macOS asks for calendar access again only when the helper itself has changed.
+Agenda then appears in Alfred Preferences › Workflows (quit and reopen Alfred if it doesn't). To update, run `git pull && ./build.sh`. macOS asks for calendar access again only when the helper itself has changed.
 
 ## Remove
 

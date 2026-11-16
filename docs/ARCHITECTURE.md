@@ -41,13 +41,16 @@ It is ad-hoc signed with identifier `com.situmorang.agenda.calendar`. An ad-hoc 
 info.plist          Alfred's workflow definition: objects, connections, settings, About text
 prefs.plist         the user's setting values (Alfred writes it once a setting is changed)
 build.sh            rebuild what changed, redraw icons, reload the workflow
+package.sh          the release package: both programs for Apple silicon and Intel, zipped into dist/Agenda.alfredworkflow
 bin/                agenda, agenda-calendar, .bridge-source-hash (built; don't edit)
-scripts/            month.sh, week.sh: the Grid Views' script sources (exec bin/agenda)
+scripts/            month.sh, week.sh: the Grid Views' script sources (exec bin/agenda); ready.zsh, sourced before every run of bin/agenda
 src/agenda/         bin/agenda source
 src/bridge/         bin/agenda-calendar source and the Info.plist linked into it
 icons/, icon.png    drawn from SF Symbols by `bin/agenda icons` (build.sh runs it)
 tests/              fixture, smoke test, previews and the README animation, live-test helper
-docs/               this file, PRD, shared memory, testing guide; images/ from tests/preview.sh and tests/demo.sh
+docs/               this file, PRD, shared memory, testing guide, changelog; images/ from tests/preview.sh and tests/demo.sh;
+                    LOCAL.md on the owner's Mac only
+dist/               packages from package.sh (git ignores it, like bin/, prefs.plist and docs/LOCAL.md)
 ```
 
 `src/agenda/`, one Swift module:
@@ -96,7 +99,7 @@ flowchart LR
 - Every view connects to the router with ↩, ⌘↩, ⌥↩ and ⌃↩ (the block list with ↩ only). Which action a key means is decided by the item's `variables` and `mods` in the JSON, not by the connection.
 - The Arg and Vars empties the argument, so the next view opens with an empty input field; its state arrives in variables.
 - Keywords are `{var:kw_*}` from the settings. External triggers (`agenda`, `day`, `week`, `month`, `join`, `notify`) are reachable as `alfred://runtrigger/com.situmorang.agenda/<id>/`.
-- Script Filters run `./bin/agenda <view> "$1"` in zsh with the query as argv, *Alfred filters results* off, and *terminate previous script* queueing. Grid Views run `scripts/<view>.sh` with the argument as `$1`: 7 columns, square tiles for the month, portrait for the week, title and subtitle in the footer, typing filters.
+- Script Filters run `. scripts/ready.zsh; ./bin/agenda <view> "$1"` in zsh with the query as argv, *Alfred filters results* off, and *terminate previous script* queueing. Grid Views run `scripts/<view>.sh` with the argument as `$1`: 7 columns, square tiles for the month, portrait for the week, title and subtitle in the footer, typing filters.
 - Object UIDs follow `A6E0DA00-0000-4000-8000-0000000000NN`. Keep them when editing `info.plist` by hand.
 
 ## The `act` contract
@@ -193,6 +196,10 @@ An Event has `id` (EventKit's event identifier), `itemId`, `title`, `start`, `en
 - `<cache>` = `~/Library/Caches/com.runningwithcrayons.Alfred/Workflow Data/com.situmorang.agenda`: `tiles/`, `badges/`, `.pruned`.
 - `<data>` = `~/Library/Application Support/Alfred/Workflow Data/com.situmorang.agenda`: `alerted.json`, `ticks.log`, `.last-tick`, `.alerts-synced`, `alerts.log`; `.dry-run` and `dry-run.log` only during live tests.
 - The LaunchAgent plist above.
+
+## Release
+
+`./package.sh` builds `dist/Agenda.alfredworkflow` from the last commit, without `docs/images`: both programs compiled with `-target <arch>-apple-macos14` for arm64 and x86_64, joined with `lipo`, and ad-hoc signed, the helper with its identifier and linked-in Info.plist as in `build.sh`. A downloaded package arrives flagged: Alfred keeps `com.apple.quarantine` on the files it imports, and macOS won't run flagged helpers that Apple hasn't notarized. So every entry point sources `scripts/ready.zsh` first, which clears the flag from `bin/` and `scripts/` with zsh's own `zsh/attr` (no extra process). The steps of a release are in `AGENTS.md`; the notes in `docs/CHANGELOG.md`.
 
 ## Extending
 

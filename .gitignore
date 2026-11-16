@@ -8,3 +8,5 @@ docs/LOCAL.md
 .DS_Store
 __pycache__/
 *.pyc
+# Packages from package.sh.
+dist/
